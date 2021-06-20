@@ -153,7 +153,7 @@ function on_mcm_load() --builds mcm menu
 	local n = ini:line_count("sortingplusmcm") --the catagories portion is dynamic
 	for i=0,n-1 do
 		local result, catgory, kinds = ini:r_line_ex("sortingplusmcm",i,"","") --catagory is a text entry field in the mcm menu, kinds is the list of kinds grouped in that catagory
-		if magazine_binder or not ( catgory == "002mags" or catagory == "001loadout") then
+		if magazine_binder or not ( catgory == "002mags" or catgory == "001loadout") then
 			if catgory and kinds then
 				ui_catagories[catgory] = str_explode(kinds,",") -- building ui_catagories list
 				if  tonumber(ui_catagories[catgory][1]) then --first element in list of kinds is the defualt value for the catagory 
