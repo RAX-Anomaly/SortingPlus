@@ -16,4 +16,5 @@ Items in these list are treated as if in a category together. that category's po
 
 Favorites/Junk are stored by section. What this means is that an AN-94 is not the same as an AN-94 with a scope on it. If you add attachments you will need to re-favorite your gun, but only once for each configuration.
 
-sortingplus.ltx now has a section offering item by item kind override. This can be used to move an item from one catagory to another when you don't agree with the orginal classification.
+Curtisy of Ishmaeel sortingplus.ltx now has a section offering item by item kind override. This can be used to move an item from one catagory to another when you don't agree with the orginal classification.
+
