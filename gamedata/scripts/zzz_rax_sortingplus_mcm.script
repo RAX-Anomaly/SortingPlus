@@ -29,7 +29,8 @@ local ini = ini_file("sortingplus.ltx")
 local bags = {
     actor_bag = true,
     actor_trade_bag = true,
-    actor_trade_bag = true
+    npc_bag = true,
+    npc_trade_bag = true
 }
 
 local function save_state(mdata)
