@@ -1,10 +1,8 @@
 <!-- 
-	Anomaly Modconfiguration Menu strings
-	
+	Anomaly Modconfiguration Menu strings	
 -->
 
 <string_table>
-
 
 	<string id="ui_mcm_title_SortingPlus">
 		<text>Sorting Plus</text>
@@ -17,7 +15,7 @@
 		<text>Sort Player Inventory</text>
 	</string>
 	<string id="ui_mcm_SortingPlus_playerinv_desc">
-		<text>Right side invetory on all screens except for trade.</text>
+		<text>Right side inventory on all screens except for trade.</text>
 	</string>
 	<string id="ui_mcm_SortingPlus_playertrade">
 		<text>Sort Player Trade Inventory</text>
@@ -29,21 +27,20 @@
 		<text>Sort NPC Inventory</text>
 	</string>
 	<string id="ui_mcm_SortingPlus_npcinv_desc">
-		<text>Left side invetory on all screens except for trade.</text>
+		<text>Left side inventory on all screens except for trade.</text>
 	</string>
 	<string id="ui_mcm_SortingPlus_npctrade">
 		<text>Sort NPC Trade Inventory</text>
 	</string>
 	<string id="ui_mcm_SortingPlus_npctrade_desc">
-		<text>Left Side Inventory when trading..</text>
+		<text>Left Side Inventory when trading.</text>
 	</string>
 	<string id="ui_mcm_SortingPlus_useltx">
 		<text>Use sortingplus.ltx</text>
 	</string>
 	<string id="ui_mcm_SortingPlus_useltx_desc">
-		<text>Ignores settings below here in favor of those in sortingpluse.ltx The ltx offers more granular control.</text>
+		<text>Ignores settings below in favor of those in sortingplus.ltx which offers more granular control.</text>
 	</string>
-
 
 	<string id="ui_mcm_SortingPlus_hilitejunk">
 		<text>Highlight Junk</text>
@@ -73,23 +70,20 @@
 		<text>Use Favorites Category</text>
 	</string>
 	<string id="ui_mcm_SortingPlus_sortfavs_desc">
-		<text>Sorts Favorites items into thier own category, by default the first one.</text>
+		<text>Sorts Favorites items into their own category, by default the first one.</text>
 	</string>
 	<string id="ui_mcm_SortingPlus_putallfavs">
-		<text>Block Put all for Favorites</text>
+		<text>Block "Move all" for Favorites.</text>
 	</string>
 	<string id="ui_mcm_SortingPlus_putallfavs_desc">
 		<text>Favorites will not be moved from your inventory when doing transfer all.</text>
 	</string>
 	<string id="ui_mcm_SortingPlus_resort">
-		<text>Resort when marking.</text>
+		<text>Re-sort when marking.</text>
 	</string>
 	<string id="ui_mcm_SortingPlus_resort_desc">
-		<text>Inventory will resort imediatly when marking Favorites/Junk. Otherwise waits until next time inventory opened. Usefull feedback if hihglighting is disabled.</text>
+		<text>Inventory will resort immediately when marking Favorites/Junk. Otherwise waits until next time inventory opened. Useful feedback if highlighting is disabled.</text>
 	</string>
-
-
-
 
 	<string id="ui_mcm_SortingPlus_001loadout">
 		<text>ARM Loadout</text>
@@ -97,7 +91,6 @@
 	<string id="ui_mcm_SortingPlus_002mags">
 		<text>ARM Magazines</text>
 	</string>
-
 
 	<string id="ui_mcm_SortingPlus_000favorites">
 		<text>Favorites</text>
@@ -150,9 +143,5 @@
 	<string id="ui_mcm_SortingPlus_150parts">
 		<text>Parts</text>
 	</string>
-
-
-
-
 
 </string_table>
