@@ -1,0 +1,93 @@
+
+;Change this table to change how things are sorted when not using AMCM or when "Use sortingplus.ltx" is checked in the AMCM menu.
+
+[item_kind_order]
+favorites           = -2 ;custom category items set to via key bind
+loadout				= -1 ;support for ARM
+mags				= 0  ;support for ARM
+w_sniper            = 1 
+w_rifle             = 1 
+w_smg               = 1
+w_shotgun           = 1 
+w_pistol            = 1 
+w_melee             = 1
+w_misc              = 1
+w_base              = 1
+w_explosive         = 1
+o_heavy             = 2 
+o_sci               = 2 
+o_medium            = 2 
+o_light             = 2 
+o_helmet            = 2
+i_arty              = 3
+i_arty_junk         = 3
+i_arty_cont         = 3
+i_device            = 4
+i_tool              = 5
+i_repair            = 5
+i_kit               = 5
+i_backpack          = 5
+i_medical           = 6
+i_food              = 7
+i_drink             = 7
+i_mutant_cooked     = 7
+i_mutant_raw        = 7
+i_letter            = 8
+i_quest             = 8
+w_ammo              = 9
+i_mutant_belt       = 10
+i_mutant_part       = 10
+i_misc              = 11
+i_upgrade           = 12
+i_part              = 13
+faction_patch       = 14
+junk                = 100 ;custom category items set to via key bind
+
+;You can force some items to be sorted as a different "kind" so they are grouped together with other items with perceived similarity.
+;Below are some opinionated defaults. If you add a brand new "kind" entry, (like "faction_patch") be sure to also add it to [item_kind_order] section above.
+
+[kind_overrides]
+hand_watch          = i_device
+wpn_binoc_inv       = i_device
+good_psy_helmet     = i_device
+bad_psy_helmet      = i_device
+decoder             = i_device
+attackers_pda       = i_device
+lead_box            = i_tool
+csky_patch          = faction_patch
+dolg_patch          = faction_patch
+ecolog_patch        = faction_patch
+freedom_patch       = faction_patch
+stalker_patch       = faction_patch
+bandit_patch        = faction_patch
+monolith_patch      = faction_patch
+army_patch          = faction_patch
+killer_patch        = faction_patch
+renegade_patch      = faction_patch
+isg_patch           = faction_patch
+greh_patch          = faction_patch
+
+; this section describes the catagories used in the second half of the AMCM menu. This section is for modders to add new item types added by 
+;		thier mod to the existing catagories or even add new ones. When adding new catagories you must make translation strings in 
+;		configs/text/eng and configs/text/rus see existing strings for formatting. The leading number is the default value, position in the list
+;		equates to position. NO WHITE SPACE!
+[sortingplusmcm]
+000favorites      = -2,favorites;custom category items set to via key bind
+001loadout		  = -1,loadout;support for ARM
+002mags		 	  = 0,mags;support for ARM
+010weapons        = 1,w_sniper,w_rifle,w_smg,w_shotgun,w_pistol,w_melee,w_misc,w_base,w_explosive
+020outfits        = 2,o_heavy,o_sci,o_medium,o_light,o_helmet,i_backpack
+030artifacts      = 3,i_arty,i_arty_junk,i_arty_cont
+040devices        = 4,i_device
+050tools          = 5,i_tool,i_repair,i_kit
+060medical        = 6,i_medical
+070foods          = 7,i_food,i_drink,i_drink
+080mutantfoods    = 7,i_mutant_cooked,i_mutant_raw
+090quest          = 8,i_quest
+100notes          = 8,i_letter
+110ammo           = 9,w_ammo
+120mutantparts    = 10,i_mutant_belt,i_mutant_part
+130misc           = 11,i_misc
+140upgrades       = 12,i_upgrade
+150parts          = 13,i_part
+999junk           = 100,junk;custom category items set to via key bind
