@@ -29,6 +29,11 @@ if yyy_mag_sorting then
 	--force load order
 end
 
+if aaa_rax_icon_override then
+	--force load order
+end
+ 
+
 local bags = {
     actor_bag = true,
     actor_trade_bag = true,
@@ -211,13 +216,13 @@ function sort_info(asec, bsec)
     ---store_table(item_order)
     -- A
     a_sec = asec
-
+	axis = utils_xml.get_item_axis(a_sec,1)
     if (not ab_w[a_sec]) then
-        ab_w[a_sec] = SYS_GetParam(2, a_sec, "inv_grid_width", 1)
+        ab_w[a_sec] = axis.w
     end
 
     if (not ab_h[a_sec]) then
-        ab_h[a_sec] = SYS_GetParam(2, a_sec, "inv_grid_height", 1)
+        ab_h[a_sec] = axis.h
     end
 
     if (not ab_k[a_sec]) then
@@ -233,13 +238,13 @@ function sort_info(asec, bsec)
     a_k = item_order[ab_k[a_sec]]
     -- B
     b_sec = bsec
-
+	axis = utils_xml.get_item_axis(b_sec,1)
     if (not ab_w[b_sec]) then
-        ab_w[b_sec] = SYS_GetParam(2, b_sec, "inv_grid_width", 1)
+        ab_w[b_sec] = axis.w
     end
 
     if (not ab_h[b_sec]) then
-        ab_h[b_sec] = SYS_GetParam(2, b_sec, "inv_grid_height", 1)
+        ab_h[b_sec] = axis.h
     end
 
     if (not ab_k[b_sec]) then
@@ -384,8 +389,9 @@ function utils_ui.UICellContainer.FindFreeCell(self, obj, sec)
         sec = obj and obj:section()
     end
 
-    local w = SYS_GetParam(2, sec, "inv_grid_width", 1)
-    local h = SYS_GetParam(2, sec, "inv_grid_height", 1)
+	axis = utils_xml.get_item_axis(sec,1)
+	local w = axis.w
+	local h = axis.h
     -- Avoid icons that don't fit
     if w > self.cols then return false end
 
