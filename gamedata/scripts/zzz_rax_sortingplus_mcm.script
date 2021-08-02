@@ -509,3 +509,36 @@ function ui_inventory.UIInventory:SortJunkTrade()
         db.actor:iterate_inventory(itr, db.actor)
     end
 end
+
+local snd_open = sound_object([[interface\inv_open]])
+
+-- Loot mode (Override)
+function ui_inventory.UIInventory.LMode_Init(self, obj)
+    self:Print(nil, "LMode_Init | obj: %s", obj and obj:name())
+
+    self.mode = "loot"
+
+    -- Show/Hide needed elements
+    self:Reset(obj)
+
+    -- We need this because box can spawn items after opening, so they don't update those instantly
+    if (not self.box_init_update.state) then -- Do not ignore inventory reset for npc boxes, so they are sorted on startup - Ishy.
+        self.box_init_update.tg = time_global()
+        self.box_init_update.state = true
+        self:LMode_ResetInventories(true)
+        return
+    end
+    self.box_init_update.state = false
+
+    -- Update inventories
+    self:LMode_ResetInventories()
+
+    -- Update info
+    self:UpdateInfo(true)
+
+    -- Known info (Special case for corpses)
+    self:LMode_TransferInfo(obj)
+
+    -- Sound effect
+    self:PlaySND(snd_open)
+end
