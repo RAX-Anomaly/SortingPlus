@@ -5,7 +5,7 @@ This work is licensed under a Creative Commons Attribution-NonCommercial-ShareAl
 Author: RavenAscendant
 --]]
 
-
+if yyy_mag_sorting then end --force load order
 -- UI events
 local K_K = DIK_keys.DIK_K --if you want to change this change the very last letter. must be caps.
 local K_J = DIK_keys.DIK_J --if you want to change this change the very last letter. must be caps.
