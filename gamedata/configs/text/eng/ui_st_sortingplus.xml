@@ -4,6 +4,21 @@
 
 <string_table>
 
+	<string id="st_rax_fav">
+		<text>Mark Favorite</text>
+	</string>
+	<string id="st_rax_unfav">
+		<text>UnMark Favorite</text>
+	</string>
+	<string id="st_rax_junk">
+		<text>Mark Junk</text>
+	</string>
+	<string id="st_rax_unjunk">
+		<text>UnMark Junk</text>
+	</string>
+
+
+
 	<string id="ui_mcm_title_SortingPlus">
 		<text>Sorting Plus</text>
 	</string>

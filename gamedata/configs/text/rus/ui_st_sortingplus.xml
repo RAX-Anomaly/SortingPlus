@@ -4,6 +4,18 @@
 -->
 
 <string_table>
+	<string id="st_rax_fav">
+		<text>Отметить как избранное</text>
+	</string>
+	<string id="st_rax_unfav">
+		<text>Снять отметку с избранного</text>
+	</string>
+	<string id="st_rax_junk">
+		<text>Отметить Джанк</text>
+	</string>
+	<string id="st_rax_unjunk">
+		<text>Снять отметку о мусоре</text>
+	</string>
 
 
 	<string id="ui_mcm_title_SortingPlus">
@@ -159,6 +171,8 @@
 	<string id="ui_mcm_SortingPlus_150parts">
 		<text>Запчасти</text>
 	</string>
+
+
 
 
 </string_table>
