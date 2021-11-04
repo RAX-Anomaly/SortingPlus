@@ -1,0 +1,68 @@
+--[[
+RavenAscendant's Custom Dynamic Functors
+3NOV2021
+This work is licensed under a Creative Commons Attribution-NonCommercial-ShareAlike 3.0 Unported License
+Author: RavenAscendant
+--]]
+
+--thanks to Demonized for the idea of abstracting this and Tronex for implementing the stalker UI in LUA
+
+
+--[[
+	name: 			unique identifier
+	dispaly_string:	translation string or function returing a translation string, that will be show in the context menu
+	funct_precond:	function returning true if this menu should be shown, in adition to your precondition this should take into acount bag and mode similar to the useX_mode and useX_container described in defines.ltx
+	func_action:	function to be executed on selecting the menu
+	
+	All functions will be passed (obj, bag, mode, ...)
+	
+	obj: game object that menu was created on
+	bag: string identifying what bag obj is in.
+	mode:string identifying mode that the inventory is in.
+	...: any parameters passed to add_functor after the forth will be passed to all functions. optional
+
+
+	modes: {"inventory" , "loot" , "trade" , "repair"}
+	bags: {"actor_equ","actor_belt","actor_bag","actor_trade_bag","actor_trade","npc_bag","npc_trade","npc_trade_bag"}
+--]]
+function add_functor(name, display_string, funct_precond, funct_action, ...)
+    if not (name and display_string and funct_precond and funct_action) then return end
+
+    if not ui_inventory.GUI then
+        ui_inventory.GUI = ui_inventory.UIInventory()
+    end
+
+    gui = ui_inventory.GUI
+    _, index = table_size(gui.properties)
+    ds_is_funct = type(display_string) == "function"
+
+    gui.properties["DYN_FUNC_" .. name] = {
+        index = index + 1,
+        name = (not ds_is_funct) and display_string or nil,
+        name_func = ds_is_funct and {"execute_functor", display_string, ...} or nil,
+        mode = t2k_table({"inventory" , "loot" , "trade" , "repair"}),
+        cont = t2k_table({"actor_equ","actor_belt","actor_bag","actor_trade_bag","actor_trade","npc_bag","npc_trade","npc_trade_bag"}),
+        precondition1 = {"execute_functor", funct_precond, ...},
+        action = {"execute_functor", funct_action, ...}
+    }
+end
+
+function table_size(tbl)
+    local size = 0
+    local max_index = 0
+
+    for k, v in pairs(tbl) do
+        size = size + 1
+
+        if v.index and (v.index > max_index) then
+            max_index = v.index
+        end
+    end
+
+    return size, max_index
+end
+
+function ui_inventory.UIInventory:execute_functor(obj, bag, _, funct,  __, ...)
+    if type(obj) == "number" then obj = level.object_by_id(obj) end
+	return obj and funct(obj, bag, self.mode, ...)
+end

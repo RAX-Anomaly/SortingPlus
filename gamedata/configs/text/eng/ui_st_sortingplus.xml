@@ -42,6 +42,12 @@
 		<text>Ignores settings below in favor of those in sortingplus.ltx which offers more granular control.</text>
 	</string>
 
+	<string id="ui_mcm_SortingPlus_iconjunk">
+		<text>Mark Junk</text>
+	</string>
+	<string id="ui_mcm_SortingPlus_iconjunk_desc">
+		<text>Mark items flagged Junk with an icon.</text>
+	</string>
 	<string id="ui_mcm_SortingPlus_hilitejunk">
 		<text>Highlight Junk</text>
 	</string>
@@ -59,6 +65,12 @@
 	</string>
 	<string id="ui_mcm_SortingPlus_selljunk_desc">
 		<text>Junk that a trader will buy will be placed in the selling pane. You must still push sell button to finalize.</text>
+	</string>
+	<string id="ui_mcm_SortingPlus_iconfavs">
+		<text>Mark Favorites</text>
+	</string>
+	<string id="ui_mcm_SortingPlus_iconfavs_desc">
+		<text>Mark items flagged as Favorites with an icon.</text>
 	</string>
 	<string id="ui_mcm_SortingPlus_hilitefavs">
 		<text>Highlight Favorites</text>

@@ -44,6 +44,12 @@
 		<text>Игнорирует настройки ниже в пользу тех, которые находятся в sortingpluse.ltx Ltx предлагает более детальный контроль.</text>
 	</string>
 	
+	<string id="ui_mcm_SortingPlus_iconjunk_desc">
+		<text>Пометьте Мусор значком.</text>
+	</string>
+	<string id="ui_mcm_SortingPlus_iconjunk">
+		<text>Отметить Джанк</text>
+	</string>
 	
 	<string id="ui_mcm_SortingPlus_hilitejunk">
 		<text>Выделить «нежелательные»</text>
@@ -63,6 +69,14 @@
 	<string id="ui_mcm_SortingPlus_selljunk_desc">
 		<text>«нежелательные» который покупает трейдер, будет помещен в панель продажи. Вам все равно нужно нажать кнопку продажи, чтобы завершить.</text>
 	</string>
+	<string id="ui_mcm_SortingPlus_iconfavs">
+		<text>Отметить избранное</text>
+	</string>
+	<string id="ui_mcm_SortingPlus_iconfavs_desc">
+		<text>Отметьте избранное значком.</text>
+	</string>
+
+
 	<string id="ui_mcm_SortingPlus_hilitefavs">
 		<text>Выделите избранное</text>
 	</string>

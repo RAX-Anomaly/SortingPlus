@@ -15,8 +15,10 @@ NPCINV = true
 NPCTRADE = true
 SORTJUNK = true
 HILITEJUNK = true
+ICONJUNK = true
 SORTFAVS = true
 HILITEFAVS = true
+ICONFAVS = true
 BLOCKPUTALLFAVS = true
 AUTOSELLJUNK = true
 RESORT = true
@@ -32,8 +34,6 @@ end
 if aaa_rax_icon_override then
 	--force load order
 end
- 
-
 local bags = {
     actor_bag = true,
     actor_trade_bag = true,
@@ -63,9 +63,33 @@ function check_junk(cell)
     if bags[cell.container.ID] then return HILITEJUNK and junk_itms[cell.section] and junk_color end
 end
 
+function icon_junk(cell, obj, sec)
+	if bags[cell.container.ID] and ICONJUNK and junk_itms[cell.section] then
+		axis = utils_xml.get_item_axis(sec)
+		return {texture = "ui\\sortingplus\\icon-junk",y = axis.h / 2 - 7 or 0, x = axis.w - 15, w = 15, h = 15}
+	end
+end
+--{texture = "ui_am_propery_01", x = 1, y = 1, w = 15, h = 15}
+function icon_favs(cell, obj, sec)
+	if bags[cell.container.ID] and ICONFAVS and favorite_itms[cell.section] then
+		axis = utils_xml.get_item_axis(sec)
+		return {texture = "ui\\sortingplus\\icon-favourite", y = axis.h / 2 - 7 or 0, x = axis.w - 15, w = 15, h = 15}
+	end
+end
+
+
+
+
+
 function on_game_start()
     rax_persistent_highlight.register("aafavorite_itms", check_favs)
     rax_persistent_highlight.register("aajunk_itms", check_junk)
+	rax_dynamic_custom_functor.add_functor("SP_fav", fav_menu_string, menu_precond, fav_menu_action)
+	rax_dynamic_custom_functor.add_functor("SP_junk", junk_menu_string, menu_precond, junk_menu_action)
+	rax_icon_layers.register("aajunk_itms", icon_junk)
+	rax_icon_layers.register("abfavorite_itms", icon_favs)
+	
+	
     RegisterScriptCallback("load_state", load_state)
     RegisterScriptCallback("save_state", save_state)
     RegisterScriptCallback("actor_on_first_update", actor_on_first_update)
@@ -112,9 +136,11 @@ function loadsettings()
         NPCTRADE = ui_mcm.get("SortingPlus/npctrade")
         SORTJUNK = ui_mcm.get("SortingPlus/sortjunk")
         HILITEJUNK = ui_mcm.get("SortingPlus/hilitejunk")
+        ICONJUNK = ui_mcm.get("SortingPlus/iconjunk")
         AUTOSELLJUNK = ui_mcm.get("SortingPlus/selljunk")
         SORTFAVS = ui_mcm.get("SortingPlus/sortfavs")
         HILITEFAVS = ui_mcm.get("SortingPlus/hilitefavs")
+        ICONFAVS = ui_mcm.get("SortingPlus/iconfavs")
         BLOCKPUTALLFAVS = ui_mcm.get("SortingPlus/putallfavs")
         RESORT = ui_mcm.get("SortingPlus/resort")
         item_order = {} --clear the cached item order since user may have changed those
@@ -148,9 +174,11 @@ function on_mcm_load() --builds mcm menu
 				{id = "npctrade", type = "check", val = 1, def = true},
 				{id = "line", type = "line"},
 				{id = "hilitejunk", type = "check", val = 1, def = true},
+				{id = "iconjunk", type = "check", val = 1, def = true},
 				{id = "sortjunk", type = "check", val = 1, def = true},
 				{id = "selljunk", type = "check", val = 1, def = true},				
 				{id = "hilitefavs", type = "check", val = 1, def = true},
+				{id = "iconfavs", type = "check", val = 1, def = true},
 				{id = "sortfavs", type = "check", val = 1, def = true},
 				{id = "putallfavs", type = "check", val = 1, def = true},
 				{id = "resort", type = "check", val = 1, def = false},
@@ -527,18 +555,61 @@ function ui_inventory.UIInventory.LMode_Init(self, obj)
         self.box_init_update.state = true
         self:LMode_ResetInventories(true)
         return
+function fav_menu_string(obj)
+    if favorite_itms[obj:section()] then
+        return "st_rax_unfav"
+    else
+        return "st_rax_fav"
     end
     self.box_init_update.state = false
+end
 
     -- Update inventories
     self:LMode_ResetInventories()
+function junk_menu_string(obj)
+    if junk_itms[obj:section()] then
+        return "st_rax_unjunk"
+    else
+        return "st_rax_junk"
+    end
+end
 
     -- Update info
     self:UpdateInfo(true)
+function menu_precond(obj, mode, bag)
+    return mode ~= "repair"
+end
 
     -- Known info (Special case for corpses)
     self:LMode_TransferInfo(obj)
+function fav_menu_action(obj)
+    sec = obj:section()
 
     -- Sound effect
     self:PlaySND(snd_open)
+    if favorite_itms[sec] then
+        favorite_itms[sec] = nil
+        ab_k[sec] = nil
+    else
+        favorite_itms[sec] = "favorites" -- add it to the list if it isn't there.
+        junk_itms[sec] = nil --remove it from junk, these lists are mutaly exclusive 
+        ab_k[sec] = "favorites" -- set the entry in the sorting cache for this section to be favorites
+    end
+	rax_icon_layers.refresh(RESORT and 1)
+end
+
+function junk_menu_action(obj)
+    sec = obj:section()
+
+    -- same things but for junk list
+    if junk_itms[sec] then
+        junk_itms[sec] = nil
+        ab_k[sec] = nil
+    else
+        junk_itms[sec] = "junk"
+        favorite_itms[sec] = nil
+        ab_k[sec] = "junk"
+    end
+
+    rax_icon_layers.refresh(RESORT and 1)
 end
