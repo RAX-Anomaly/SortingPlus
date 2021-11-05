@@ -552,7 +552,7 @@ function ui_inventory.UIInventory.LMode_Init(self, obj)
         self.box_init_update.state = true
         self:LMode_ResetInventories(true)
         return
-
+	end
     -- Update inventories
     self:LMode_ResetInventories()
 
@@ -561,7 +561,9 @@ function ui_inventory.UIInventory.LMode_Init(self, obj)
 
     -- Known info (Special case for corpses)
     self:LMode_TransferInfo(obj)
+
 end
+
 
 function junk_menu_action(obj)
     sec = obj:section()
