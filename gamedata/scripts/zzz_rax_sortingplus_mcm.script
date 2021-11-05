@@ -27,9 +27,6 @@ local junk_itms = {}
 local favs_color = GetARGB(50, 176, 238, 26)
 local junk_color = GetARGB(50, 204, 0, 0)
 local ini = ini_file("sortingplus.ltx")
-if yyy_mag_sorting then
-	--force load order
-end
 
 if aaa_rax_icon_override then
 	--force load order
@@ -37,8 +34,8 @@ end
 local bags = {
     actor_bag = true,
     actor_trade_bag = true,
-    npc_bag = true,
-    npc_trade_bag = true
+   -- npc_bag = true,
+ --   npc_trade_bag = true
 }
 
 local function save_state(mdata)
@@ -555,47 +552,15 @@ function ui_inventory.UIInventory.LMode_Init(self, obj)
         self.box_init_update.state = true
         self:LMode_ResetInventories(true)
         return
-function fav_menu_string(obj)
-    if favorite_itms[obj:section()] then
-        return "st_rax_unfav"
-    else
-        return "st_rax_fav"
-    end
-    self.box_init_update.state = false
-end
 
     -- Update inventories
     self:LMode_ResetInventories()
-function junk_menu_string(obj)
-    if junk_itms[obj:section()] then
-        return "st_rax_unjunk"
-    else
-        return "st_rax_junk"
-    end
-end
 
     -- Update info
     self:UpdateInfo(true)
-function menu_precond(obj, mode, bag)
-    return mode ~= "repair"
-end
 
     -- Known info (Special case for corpses)
     self:LMode_TransferInfo(obj)
-function fav_menu_action(obj)
-    sec = obj:section()
-
-    -- Sound effect
-    self:PlaySND(snd_open)
-    if favorite_itms[sec] then
-        favorite_itms[sec] = nil
-        ab_k[sec] = nil
-    else
-        favorite_itms[sec] = "favorites" -- add it to the list if it isn't there.
-        junk_itms[sec] = nil --remove it from junk, these lists are mutaly exclusive 
-        ab_k[sec] = "favorites" -- set the entry in the sorting cache for this section to be favorites
-    end
-	rax_icon_layers.refresh(RESORT and 1)
 end
 
 function junk_menu_action(obj)
@@ -612,4 +577,38 @@ function junk_menu_action(obj)
     end
 
     rax_icon_layers.refresh(RESORT and 1)
+end
+
+function fav_menu_string(obj)
+    if favorite_itms[obj:section()] then
+        return "st_rax_unfav"
+    else
+        return "st_rax_fav"
+    end
+    self.box_init_update.state = false
+end
+function fav_menu_action(obj)
+    sec = obj:section()
+
+    -- Sound effect
+    self:PlaySND(snd_open)
+    if favorite_itms[sec] then
+        favorite_itms[sec] = nil
+        ab_k[sec] = nil
+    else
+        favorite_itms[sec] = "favorites" -- add it to the list if it isn't there.
+        junk_itms[sec] = nil --remove it from junk, these lists are mutaly exclusive 
+        ab_k[sec] = "favorites" -- set the entry in the sorting cache for this section to be favorites
+    end
+	rax_icon_layers.refresh(RESORT and 1)
+end
+function menu_precond(obj, mode, bag)
+    return mode ~= "repair"
+end
+function junk_menu_string(obj)
+    if junk_itms[obj:section()] then
+        return "st_rax_unjunk"
+    else
+        return "st_rax_junk"
+    end
 end
