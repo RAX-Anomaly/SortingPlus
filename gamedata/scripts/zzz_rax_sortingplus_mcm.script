@@ -5,7 +5,7 @@ This work is licensed under a Creative Commons Attribution-NonCommercial-ShareAl
 Author: RavenAscendant
 --]]
 
-if yyy_mag_sorting then end --force load order
+
 -- UI events
 local K_K = DIK_keys.DIK_K --if you want to change this change the very last letter. must be caps.
 local K_J = DIK_keys.DIK_J --if you want to change this change the very last letter. must be caps.
@@ -27,15 +27,15 @@ local junk_itms = {}
 local favs_color = GetARGB(50, 176, 238, 26)
 local junk_color = GetARGB(50, 204, 0, 0)
 local ini = ini_file("sortingplus.ltx")
-
-if aaa_rax_icon_override then
+if yyy_mag_sorting then
 	--force load order
 end
+
 local bags = {
     actor_bag = true,
     actor_trade_bag = true,
-   -- npc_bag = true,
- --   npc_trade_bag = true
+    npc_bag = true,
+    npc_trade_bag = true
 }
 
 local function save_state(mdata)
@@ -508,6 +508,43 @@ end
 local PUTALL = false --flag to keep track of put all being in progress
 ui_inventory.UIInventory.LMode_PutAllBase = ui_inventory.UIInventory.LMode_PutAll --copy of the base script.
 
+
+local snd_open = sound_object([[interface\inv_open]])
+
+-- Loot mode (Override)
+function ui_inventory.UIInventory.LMode_Init(self, obj)
+    self:Print(nil, "LMode_Init | obj: %s", obj and obj:name())
+
+    self.mode = "loot"
+
+    -- Show/Hide needed elements
+    self:Reset(obj)
+
+    -- We need this because box can spawn items after opening, so they don't update those instantly
+    if (not self.box_init_update.state) then -- Do not ignore inventory reset for npc boxes, so they are sorted on startup - Ishy.
+        self.box_init_update.tg = time_global()
+        self.box_init_update.state = true
+        self:LMode_ResetInventories(true)
+        return
+    end
+    self.box_init_update.state = false
+
+    -- Update inventories
+    self:LMode_ResetInventories()
+
+    -- Update info
+    self:UpdateInfo(true)
+
+    -- Known info (Special case for corpses)
+    self:LMode_TransferInfo(obj)
+
+    -- Sound effect
+    self:PlaySND(snd_open)
+end
+
+
+
+
 -- add entry exit flag set to the put all function
 function ui_inventory.UIInventory:LMode_PutAll()
     PUTALL = BLOCKPUTALLFAVS -- flag is set to the setting option. if setting is false normal behavior results.
@@ -535,35 +572,41 @@ function ui_inventory.UIInventory:SortJunkTrade()
     end
 end
 
-local snd_open = sound_object([[interface\inv_open]])
 
--- Loot mode (Override)
-function ui_inventory.UIInventory.LMode_Init(self, obj)
-    self:Print(nil, "LMode_Init | obj: %s", obj and obj:name())
 
-    self.mode = "loot"
-
-    -- Show/Hide needed elements
-    self:Reset(obj)
-
-    -- We need this because box can spawn items after opening, so they don't update those instantly
-    if (not self.box_init_update.state) then -- Do not ignore inventory reset for npc boxes, so they are sorted on startup - Ishy.
-        self.box_init_update.tg = time_global()
-        self.box_init_update.state = true
-        self:LMode_ResetInventories(true)
-        return
-	end
-    -- Update inventories
-    self:LMode_ResetInventories()
-
-    -- Update info
-    self:UpdateInfo(true)
-
-    -- Known info (Special case for corpses)
-    self:LMode_TransferInfo(obj)
-
+function fav_menu_string(obj)
+    if favorite_itms[obj:section()] then
+        return "st_rax_unfav"
+    else
+        return "st_rax_fav"
+    end
 end
 
+function junk_menu_string(obj)
+    if junk_itms[obj:section()] then
+        return "st_rax_unjunk"
+    else
+        return "st_rax_junk"
+    end
+end
+
+function menu_precond(obj, mode, bag)
+    return mode ~= "repair"
+end
+
+function fav_menu_action(obj)
+    sec = obj:section()
+
+    if favorite_itms[sec] then
+        favorite_itms[sec] = nil
+        ab_k[sec] = nil
+    else
+        favorite_itms[sec] = "favorites" -- add it to the list if it isn't there.
+        junk_itms[sec] = nil --remove it from junk, these lists are mutaly exclusive 
+        ab_k[sec] = "favorites" -- set the entry in the sorting cache for this section to be favorites
+    end
+	rax_icon_layers.refresh(RESORT and 1)
+end
 
 function junk_menu_action(obj)
     sec = obj:section()
@@ -579,38 +622,4 @@ function junk_menu_action(obj)
     end
 
     rax_icon_layers.refresh(RESORT and 1)
-end
-
-function fav_menu_string(obj)
-    if favorite_itms[obj:section()] then
-        return "st_rax_unfav"
-    else
-        return "st_rax_fav"
-    end
-    self.box_init_update.state = false
-end
-function fav_menu_action(obj)
-    sec = obj:section()
-
-    -- Sound effect
-    self:PlaySND(snd_open)
-    if favorite_itms[sec] then
-        favorite_itms[sec] = nil
-        ab_k[sec] = nil
-    else
-        favorite_itms[sec] = "favorites" -- add it to the list if it isn't there.
-        junk_itms[sec] = nil --remove it from junk, these lists are mutaly exclusive 
-        ab_k[sec] = "favorites" -- set the entry in the sorting cache for this section to be favorites
-    end
-	rax_icon_layers.refresh(RESORT and 1)
-end
-function menu_precond(obj, mode, bag)
-    return mode ~= "repair"
-end
-function junk_menu_string(obj)
-    if junk_itms[obj:section()] then
-        return "st_rax_unjunk"
-    else
-        return "st_rax_junk"
-    end
 end
