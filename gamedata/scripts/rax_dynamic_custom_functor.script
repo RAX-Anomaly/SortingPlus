@@ -35,8 +35,7 @@ end
 
 
 local function  add_functor_now(name, display_string, funct_precond, funct_action, ...)
-    if not (name and display_string and funct_precond and funct_action) then printf("RAX DYN FUC") return end
-	printf("RAX DYN FUC2")
+    if not (name and display_string and funct_precond and funct_action) then  return end
     if not ui_inventory.GUI then
         ui_inventory.GUI = ui_inventory.UIInventory()
     end
@@ -79,7 +78,6 @@ end
 local function process_functor_queue()
 	for _,v in ipairs(functor_queue) do
 		add_functor_now(unpack(v))
-		printf("RAX DYN FUC v")
 	end
 	functor_queue = {}
 end

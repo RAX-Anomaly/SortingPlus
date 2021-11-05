@@ -27,9 +27,10 @@ local junk_itms = {}
 local favs_color = GetARGB(50, 176, 238, 26)
 local junk_color = GetARGB(50, 204, 0, 0)
 local ini = ini_file("sortingplus.ltx")
-if yyy_mag_sorting then
+if yyy_mag_sorting  then
 	--force load order
 end
+if aaa_rax_icon_override_mcm then end
 
 local bags = {
     actor_bag = true,
